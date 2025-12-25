@@ -5,16 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -36,6 +39,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -47,6 +51,7 @@ import com.example.noto.ui.theme.blur
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalHapticFeedback
+import kotlin.io.path.Path
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,22 +107,7 @@ fun Background(){
     )
 }
 
-@Composable
-fun BlurBG(){
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ){
-        Image(
-            painter = painterResource(R.drawable.tropical_green_leaves_background),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxSize()
-                .blur(90.dp),
 
-            contentScale = ContentScale.Crop
-        )
-
-}}
 
 @Composable
 fun NotoTitle(){
@@ -148,6 +138,7 @@ fun Bottommenu(){
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .offset(x = (-50).dp)
                 .clip(RoundedCornerShape(100))
                 .size(width = 200.dp, height = 60.dp)
                 .background(MaterialTheme.colorScheme.secondary)
@@ -159,6 +150,7 @@ fun Bottommenu(){
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .size(width = 200.dp, height = 60.dp)
+                .offset(x = (-50).dp)
         ){
 
             IconButton(
@@ -198,11 +190,69 @@ fun Bottommenu(){
                     .bounceClick()
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.outline_settings_24),
+                    painter = painterResource(R.drawable.rounded_file_export_24),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
         }
+        M3_Hexagon(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .size(53.dp)
+                .offset(90.dp,y = (-5).dp),
+            points = 10,
+            wobble = 5f
+        )
+        IconButton(
+            onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
+            },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .offset(90.dp)
+                .size(60.dp)
+                .bounceClick()
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.outline_settings_24),
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.secondary
+            )
+        }
+
+
+
+
+
+    }
+}
+
+@Composable
+fun M3_Hexagon(
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.primary,
+    wobble: Float = 6f,      // intensity
+    points: Int = 6
+) {
+    Canvas(modifier = modifier) {
+        val radius = size.minDimension / 2f
+        val center = center
+        val path = Path()
+
+        val steps = 100
+        for (i in 0..steps) {
+            val angle = (2 * Math.PI * i / steps).toFloat()
+            val wave = kotlin.math.sin(angle * points) * wobble
+            val r = radius + wave
+
+            val x = center.x + r * kotlin.math.cos(angle)
+            val y = center.y + r * kotlin.math.sin(angle)
+
+            if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
+        }
+        path.close()
+
+        drawPath(path, color)
     }
 }
