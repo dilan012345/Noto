@@ -1,5 +1,6 @@
 package com.example.noto
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,19 +9,28 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,6 +50,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -51,6 +62,10 @@ import com.example.noto.ui.theme.blur
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import kotlin.io.path.Path
 
 class MainActivity : ComponentActivity() {
@@ -61,7 +76,7 @@ class MainActivity : ComponentActivity() {
             NotoTheme {
                 NotoTheme(dynamicColor = false) {
                     Background()
-                    NotoTitle()
+                    Grid()
                     Bottommenu()
                     }
                 }
@@ -138,6 +153,15 @@ fun Bottommenu(){
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
+                .offset(y = (20).dp)
+                .clip(RoundedCornerShape(100))
+                .size(width = 350.dp, height = 100.dp)
+                .background(MaterialTheme.colorScheme.background)
+
+        )
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
                 .offset(x = (-50).dp)
                 .clip(RoundedCornerShape(100))
                 .size(width = 200.dp, height = 60.dp)
@@ -190,7 +214,7 @@ fun Bottommenu(){
                     .bounceClick()
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.rounded_file_export_24),
+                    painter = painterResource(R.drawable.outline_settings_24),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -215,7 +239,7 @@ fun Bottommenu(){
                 .bounceClick()
         ) {
             Icon(
-                painter = painterResource(R.drawable.outline_settings_24),
+                painter = painterResource(R.drawable.rounded_file_export_24),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.secondary
             )
@@ -254,5 +278,75 @@ fun M3_Hexagon(
         path.close()
 
         drawPath(path, color)
+    }
+}
+
+@Composable
+fun Grid(){
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        contentPadding = PaddingValues(start = 12.dp, top = 0.dp, end = 12.dp, bottom = 50.dp),
+        horizontalArrangement = Arrangement.spacedBy(15.dp),
+        verticalArrangement = Arrangement.spacedBy(15.dp)
+    ) {
+
+        val itemsList = 10
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            NotoTitle()
+        }
+        items(itemsList) { note ->
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .border(
+                        0.5.dp,
+                        shape = RoundedCornerShape(20.dp),
+                        color = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(MaterialTheme.colorScheme.secondary)
+                    .combinedClickable(
+                        onClick = {
+                            //  TODO - Open note
+                        },
+                        onLongClick = {
+                            // TODO - Delete note
+                        }
+                    )
+                    .padding(12.dp)
+            ) {
+                Column {
+                    Text(
+                        text = "test",
+                        style = MaterialTheme.typography.titleLarge,
+                            fontSize = 20.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(top = 7.dp)
+
+                    )
+
+
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Box(
+                        modifier = Modifier
+                            .width(700.dp)
+                            .height(1.dp)
+                            .background(color = Color.White)
+                    )
+                    Text(
+                        text = "body",
+                        style = MaterialTheme.typography.titleLarge,
+                            fontSize = 15.sp,
+                            color = Color.White,
+                        modifier = Modifier.padding(top = 20.dp)
+
+                    )
+                }
+            }
+        }
     }
 }
