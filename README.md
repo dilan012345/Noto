@@ -15,8 +15,7 @@ Minimal notes app in a material 3 style
 - Locked notes (Requiring biometric authentication to access)
 - Cloud Sync (Link to Onedrive)
 - Autocorrect (using SerpAPI)
-
-  
+- Multilingual Support  
 ## Screenshots
 ![Screenshot_20260218_211635_Noto](https://github.com/user-attachments/assets/cfbc4366-592b-4779-94bd-64d96ba39319)
 ---
