@@ -67,23 +67,40 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import kotlin.io.path.Path
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.graphicsLayer
+
+import androidx.activity.compose.setContent
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         enableEdgeToEdge()
-        setContent {
-            NotoTheme {
-                NotoTheme(dynamicColor = false) {
-                    Background()
-                    Grid()
-                    Bottommenu()
+        window.setNavigationBarContrastEnforced(false)
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            isAppearanceLightNavigationBars = true
+            setContent {
+                NotoTheme {
+                    NotoTheme(dynamicColor = false) {
+                        Background()
+                        Grid()
+                        Bottommenu()
+
                     }
                 }
             }
         }
     }
-
+}
 enum class ButtonState { Pressed, Idle }
 fun Modifier.bounceClick() = composed {
     var buttonState by remember { mutableStateOf(ButtonState.Idle) }
@@ -142,7 +159,35 @@ fun NotoTitle(){
 @Composable
 fun Bottommenu(){
     val haptic = LocalHapticFeedback.current
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Transparent)
+            .padding(bottom = 1.dp)
+// Raised clear box to anchor menu to
+    ){
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
 
+
+                .size(width = 450.dp, height = 190.dp)
+
+
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.9f),
+
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.01f)
+                     ),
+                        start = Offset(0f, Float.POSITIVE_INFINITY),
+                        end = Offset(0f, 0f)
+                    )
+                 ),
+                )
+
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -150,13 +195,26 @@ fun Bottommenu(){
             .padding(bottom = 80.dp)
 // Raised clear box to anchor menu to
     ){
+
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .offset(y = (20).dp)
                 .clip(RoundedCornerShape(100))
                 .size(width = 350.dp, height = 100.dp)
-                .background(MaterialTheme.colorScheme.background)
+
+                //.background(MaterialTheme.colorScheme.surface)
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Color.Black.copy(alpha = 0.2f),
+                            Color.Black.copy(alpha = 0.6f),
+                            Color.Black.copy(alpha = 0.5f)
+                        ),
+                        start = Offset(0f, Float.POSITIVE_INFINITY),
+                        end = Offset(0f, 0f)
+                    )
+                )
 
         )
         Box(

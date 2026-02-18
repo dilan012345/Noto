@@ -39,8 +39,9 @@ val DarkOnSecondary = Color(0xFF00332A)
 val DarkSecondaryContainer = Color(0xFF3B393E)
 val DarkOnSecondaryContainer = Color(0xFFB2DFDB)
 
+
 val DarkBackground = Color(0xFF211E25)
 val DarkOnBackground = Color(0xFFE0F2F1)
-val DarkSurface = Color(0xFF004D40)
-val DarkOnSurface = Color(0xFFE0F2F1)
+val DarkSurface = Color(0xFF2b2041)
+val DarkOnSurface = Color(0xFF9369d0)
 val blur = Color(0x20E0F2F1)
