@@ -73,11 +73,17 @@ import android.os.Build
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
-
+import androidx.compose.ui.platform.LocalContext
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
-
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,11 +95,13 @@ class MainActivity : ComponentActivity() {
         WindowInsetsControllerCompat(window, window.decorView).apply {
             isAppearanceLightNavigationBars = true
             setContent {
+
                 NotoTheme {
+
+
                     NotoTheme(dynamicColor = false) {
-                        Background()
-                        Grid()
-                        Bottommenu()
+
+                        AppNavigation()
 
                     }
                 }
@@ -140,11 +148,21 @@ fun Background(){
 }
 
 
+@Composable
+fun HomeScreen(navController: NavController) {
+    Background()
+    NoteGrid()
+    Bottommenu (
+        onSettingsClick = {
+            navController.navigate("settings")
+        }
+    )
+}
 
 @Composable
-fun NotoTitle(){
+fun Title(Titletext: String){
     Text(
-        text = "noto.",
+        text = Titletext,
 
         style = MaterialTheme.typography.bodyLarge.copy(
             fontSize = 60.sp,
@@ -157,7 +175,7 @@ fun NotoTitle(){
 }
 
 @Composable
-fun Bottommenu(){
+fun Bottommenu(onSettingsClick: () -> Unit){
     val haptic = LocalHapticFeedback.current
     Box(
         modifier = Modifier
@@ -263,9 +281,11 @@ fun Bottommenu(){
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))
+            val context = LocalContext.current
             IconButton(
                 onClick = {
                     haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
+                    onSettingsClick()
                           },
                 modifier = Modifier
                     .size(60.dp)
@@ -340,7 +360,7 @@ fun M3_Hexagon(
 }
 
 @Composable
-fun Grid(){
+fun NoteGrid(){
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(start = 12.dp, top = 0.dp, end = 12.dp, bottom = 50.dp),
@@ -350,7 +370,7 @@ fun Grid(){
 
         val itemsList = 10
         item(span = { GridItemSpan(maxLineSpan) }) {
-            NotoTitle()
+            Title("noto.")
         }
         items(itemsList) { note ->
 
