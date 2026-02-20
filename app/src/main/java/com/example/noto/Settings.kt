@@ -104,18 +104,7 @@ fun Haze(){
         )
 
     }}
-@Composable
-fun SettingsScreen(navController: NavController) {
-    Background()
 
-    SettingsGrid()
-    Haze()
-    BackButton(
-        onBackClick = {
-            navController.navigate("home")
-        }
-    )
-}
 
 @Composable
 fun BackButton(onBackClick: () -> Unit){

@@ -148,16 +148,7 @@ fun Background(){
 }
 
 
-@Composable
-fun HomeScreen(navController: NavController) {
-    Background()
-    NoteGrid()
-    Bottommenu (
-        onSettingsClick = {
-            navController.navigate("settings")
-        }
-    )
-}
+
 
 @Composable
 fun Title(Titletext: String){
@@ -360,7 +351,7 @@ fun M3_Hexagon(
 }
 
 @Composable
-fun NoteGrid(){
+fun NoteGrid(onNoteClick: (String) -> Unit){
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(start = 12.dp, top = 0.dp, end = 12.dp, bottom = 50.dp),
@@ -373,7 +364,7 @@ fun NoteGrid(){
             Title("noto.")
         }
         items(itemsList) { note ->
-
+            val noteTitle = "Note #$note"
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -387,7 +378,7 @@ fun NoteGrid(){
                     .background(MaterialTheme.colorScheme.secondary)
                     .combinedClickable(
                         onClick = {
-                            //  TODO - Open note
+                              onNoteClick(noteTitle)
                         },
                         onLongClick = {
                             // TODO - Delete note
@@ -397,7 +388,7 @@ fun NoteGrid(){
             ) {
                 Column {
                     Text(
-                        text = "test",
+                        text = noteTitle,
                         style = MaterialTheme.typography.titleLarge,
                             fontSize = 20.sp,
                             color = MaterialTheme.colorScheme.primary,
