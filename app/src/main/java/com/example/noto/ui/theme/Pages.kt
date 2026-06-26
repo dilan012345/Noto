@@ -8,7 +8,9 @@ import com.example.noto.BackButton
 import com.example.noto.Background
 import com.example.noto.Bottommenu
 import com.example.noto.Haze
+import com.example.noto.ImportBox
 import com.example.noto.NoteGrid
+import com.example.noto.NoteScroll
 import com.example.noto.SettingsGrid
 import com.example.noto.Title
 import com.example.noto.TitleSeperator
@@ -35,6 +37,10 @@ fun HomeScreen(navController: NavController) {
         onSettingsClick = {
             navController.navigate("settings")
         }
+        ,
+        onImportClick = {
+            navController.navigate("import notes")
+        }
     )
 }
 
@@ -56,13 +62,27 @@ fun SettingsScreen(navController: NavController) {
 @Composable
 fun EditNoteScreen(navController: NavController, noteID: String?) {
     Background()
+    NoteScroll()
+    BackButton(
+        onBackClick = {
+            navController.navigate("home")
+        },
+    )
+
+}
+
+@Composable
+fun ImportNotesScreen(navController: NavController) {
+    Background()
     BackButton(
         onBackClick = {
             navController.navigate("home")
         }
     )
     Title(
-        Titletext = "$noteID"
+        Titletext = "Import"
     )
     TitleSeperator()
+    ImportBox()
+
 }

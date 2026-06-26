@@ -14,7 +14,12 @@ import androidx.navigation.navArgument
 import com.example.noto.ui.theme.EditNoteScreen
 import com.example.noto.ui.theme.HomeScreen
 import com.example.noto.ui.theme.SettingsScreen
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 
+import androidx.compose.animation.*
+import com.example.noto.ui.theme.ImportNotesScreen
+
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -28,12 +33,17 @@ fun AppNavigation() {
             ) {
                 composable("home") {
                  HomeScreen(navController)
-             }
-
-                composable("settings") {
+                }
+                composable("import notes", enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
+                    exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) }){
+                    ImportNotesScreen(navController)
+                }
+                composable("settings", enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
+                    exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) }) {
                     SettingsScreen(navController)
             }
-                composable("edit note") {
+                composable("edit note", enterTransition = { slideInHorizontally(initialOffsetX = { -1000 }) },
+                    exitTransition = { slideOutVertically(targetOffsetY = { 3000 }) }) {
                     val noteId = navController.previousBackStackEntry
                         ?.savedStateHandle
                         ?.get<String>("noteId")

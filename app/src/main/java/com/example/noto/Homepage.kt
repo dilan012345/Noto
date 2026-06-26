@@ -166,7 +166,7 @@ fun Title(Titletext: String){
 }
 
 @Composable
-fun Bottommenu(onSettingsClick: () -> Unit){
+fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit){
     val haptic = LocalHapticFeedback.current
     Box(
         modifier = Modifier
@@ -216,9 +216,9 @@ fun Bottommenu(onSettingsClick: () -> Unit){
                 .background(
                     brush = Brush.linearGradient(
                         colors = listOf(
-                            Color.Black.copy(alpha = 0.2f),
-                            Color.Black.copy(alpha = 0.6f),
-                            Color.Black.copy(alpha = 0.5f)
+                            Color.Black.copy(alpha = 0.0f),
+                            Color.Black.copy(alpha = 0.0f),
+                            Color.Black.copy(alpha = 0.0f)
                         ),
                         start = Offset(0f, Float.POSITIVE_INFINITY),
                         end = Offset(0f, 0f)
@@ -289,6 +289,7 @@ fun Bottommenu(onSettingsClick: () -> Unit){
                 )
             }
         }
+
         M3_Hexagon(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -300,6 +301,7 @@ fun Bottommenu(onSettingsClick: () -> Unit){
         IconButton(
             onClick = {
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
+                onImportClick()
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -359,7 +361,7 @@ fun NoteGrid(onNoteClick: (String) -> Unit){
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
 
-        val itemsList = 10
+        val itemsList = 25
         item(span = { GridItemSpan(maxLineSpan) }) {
             Title("noto.")
         }
@@ -407,7 +409,7 @@ fun NoteGrid(onNoteClick: (String) -> Unit){
                             .background(color = Color.White)
                     )
                     Text(
-                        text = "body",
+                        text = "Body #$note",
                         style = MaterialTheme.typography.titleLarge,
                             fontSize = 15.sp,
                             color = Color.White,

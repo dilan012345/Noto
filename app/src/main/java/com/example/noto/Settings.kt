@@ -34,7 +34,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -50,6 +49,7 @@ import androidx.navigation.NavController
 import com.example.noto.ui.theme.NotoTheme
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 
 class Settings : ComponentActivity() {
@@ -116,9 +116,9 @@ fun BackButton(onBackClick: () -> Unit){
     ) {
         M3_Hexagon(
             modifier = Modifier
-                .align(Alignment.TopStart)
-                .size(53.dp)
-                .offset(10.dp, y = (55).dp),
+                .align(Alignment.BottomCenter)
+                .size(63.dp)
+                .offset(y = (-80).dp),
             points = 10,
             wobble = 5f
         )
@@ -128,9 +128,9 @@ fun BackButton(onBackClick: () -> Unit){
                 onBackClick()
             },
             modifier = Modifier
-                .align(Alignment.TopStart)
-                .offset(5.dp, y = (52).dp)
-                .size(60.dp)
+                .align(Alignment.BottomCenter)
+                .offset(y = (-72).dp)
+                .size(80.dp)
                 .bounceClick()
         ) {
             Icon(
@@ -255,7 +255,14 @@ fun SettingsGrid() {
                        .align(Alignment.CenterStart)
                )
            }
+            Box(
+                modifier = Modifier
+                    .height(160.dp)
+                    .fillMaxWidth()
+
+            ){}
 
 
         }
+
 }}
