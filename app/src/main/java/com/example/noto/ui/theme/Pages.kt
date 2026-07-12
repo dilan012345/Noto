@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import androidx.navigation.navArgument
 import com.example.noto.BackButton
 import com.example.noto.Background
+import com.example.noto.BottomMenuForNotes
 import com.example.noto.Bottommenu
 import com.example.noto.Haze
 import com.example.noto.ImportBox
@@ -63,10 +65,11 @@ fun SettingsScreen(navController: NavController) {
 fun EditNoteScreen(navController: NavController, noteID: String?) {
     Background()
     NoteScroll()
-    BackButton(
-        onBackClick = {
-            navController.navigate("home")
-        },
+
+    Haze()
+    BottomMenuForNotes(
+        onSettingsClick = { navController.navigate("settings") },
+        onBackClick = { navController.navigate("home") }
     )
 
 }
