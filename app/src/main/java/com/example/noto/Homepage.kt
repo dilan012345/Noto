@@ -85,7 +85,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
-class MainActivity : ComponentActivity() {
+class Homepage : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -93,7 +93,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         window.setNavigationBarContrastEnforced(false)
         WindowInsetsControllerCompat(window, window.decorView).apply {
-            isAppearanceLightNavigationBars = true
+            isAppearanceLightNavigationBars = true}
             setContent {
 
                 NotoTheme {
@@ -106,7 +106,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
-        }
+
     }
 }
 enum class ButtonState { Pressed, Idle }
@@ -229,7 +229,7 @@ fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit){
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .offset(x = (-50).dp)
+                .offset(x = (-40).dp)
                 .clip(RoundedCornerShape(100))
                 .size(width = 200.dp, height = 60.dp)
                 .background(MaterialTheme.colorScheme.secondary)
@@ -241,7 +241,7 @@ fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit){
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .size(width = 200.dp, height = 60.dp)
-                .offset(x = (-50).dp)
+                .offset(x = (-40).dp)
         ){
 
             IconButton(
@@ -294,7 +294,7 @@ fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit){
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .size(53.dp)
-                .offset(90.dp,y = (-5).dp),
+                .offset(100.dp,y = (-5).dp),
             points = 10,
             wobble = 5f
         )
@@ -305,7 +305,7 @@ fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit){
             },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .offset(90.dp)
+                .offset(100.dp)
                 .size(60.dp)
                 .bounceClick()
         ) {

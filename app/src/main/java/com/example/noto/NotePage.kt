@@ -1,17 +1,26 @@
 package com.example.noto
 
-import android.R
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.ui.focus.onFocusEvent
+import kotlinx.coroutines.launch
+import androidx.compose.foundation.layout.imeNestedScroll
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFrom
@@ -48,13 +57,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.ImeAction
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import com.example.noto.R
 
-class MyActivity : AppCompatActivity() {
+class NotePage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Optional: no setContentView if no layout
+
     }
 }
+
 
 @Composable
 fun TitleSeperator(){
@@ -101,43 +123,41 @@ fun NoteTitle(Titletext: String) {
 
     }
 }
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun NoteScroll() {
 
+    var text by rememberSaveable { mutableStateOf("enter") }
 
-    LazyColumn(
+    Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(2220.dp)
-            .padding(top = 0.dp),
+            .fillMaxSize()
+            .imePadding(),
         verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
-        item {
-            NoteTitle("Test")
-            TitleSeperator()
-            Box(
-                modifier = Modifier
-                    .height(10.dp)
-                    .fillMaxWidth()
 
-            )
-        }
-        item {
-            Box(
-                modifier = Modifier
-                    .height(1000.dp)
-                    .padding(start = 20.dp, end = 20.dp)
-                    .fillMaxWidth()
-                    .border(
-                        0.5.dp,
-                        shape = RoundedCornerShape(20.dp),
-                        color = MaterialTheme.colorScheme.secondaryContainer
-                    )
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(MaterialTheme.colorScheme.secondary)
+        NoteTitle("Test")
 
-            ){
-            var text by remember { mutableStateOf("enter") }
+        Box(
+            modifier = Modifier
+                .height(10.dp)
+                .fillMaxWidth()
+        )
+
+        Box(
+            modifier = Modifier
+
+                .padding(start = 20.dp, end = 20.dp)
+                .fillMaxWidth()
+                .border(
+                    0.5.dp,
+                    shape = RoundedCornerShape(20.dp),
+                    color = MaterialTheme.colorScheme.secondaryContainer
+                )
+                .clip(RoundedCornerShape(20.dp))
+                .background(MaterialTheme.colorScheme.secondary)
+        ) {
+
             TextField(
                 value = text,
                 onValueChange = { text = it },
@@ -145,22 +165,28 @@ fun NoteScroll() {
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent),
-                modifier = Modifier
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                modifier = Modifier.fillMaxSize(),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Default
+                ),
+                singleLine = false,
+                maxLines = Int.MAX_VALUE,
+                textStyle = TextStyle(
+                    fontFamily = FontFamily(Font(R.font.coolvetica)),
+                    fontSize = 20.sp
+                )
             )
-            }
-
-
         }
-        items(10) {
+
+        repeat(10) {
             Box(
                 modifier = Modifier
                     .height(150.dp)
                     .fillMaxWidth()
-
             )
         }
-
     }
 }
 
@@ -172,6 +198,7 @@ fun BottomMenuForNotes(onSettingsClick: () -> Unit, onBackClick: () -> Unit){
             .fillMaxSize()
             .background(Color.Transparent)
             .padding(bottom = 1.dp)
+
 // Raised clear box to anchor menu to
     ){
         Box(
