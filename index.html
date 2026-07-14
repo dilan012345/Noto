@@ -36,9 +36,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 130px;
-
     background: #211e25;
-
     z-index: 5;
 }
 
@@ -98,7 +96,6 @@ body::after {
 }
 
 
-
 .centre-title {
     margin-top: 10px;
     margin-bottom: 40px;
@@ -107,6 +104,7 @@ body::after {
     font-size: 60px;
 }
 
+
 .cards {
     display: flex;
     justify-content: center;
@@ -114,27 +112,37 @@ body::after {
     flex-wrap: wrap;
 }
 
+
 .card {
     width: 300px;
     height: 600px;
-    object-fit: contain;
+
     background: #151219;
 
     border: 3px solid #3a383d;
     border-radius: 40px;
 
+    overflow: hidden;
+
     display: flex;
     justify-content: center;
     align-items: center;
+}
 
-    font-family: "Coolvetica";
-    font-size: 30px;
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 40px;
 }
 
 </style>
 </head>
 
 <body>
+
+<div class="header-cover"></div>
 
 <div class="top-left">
     noto.
@@ -146,7 +154,8 @@ body::after {
     <button>Github</button>
     <button>Download</button>
 </div>
-<div class="header-cover"></div>
+
+
 <div class="content">
 
     <div class="description">
@@ -156,9 +165,11 @@ body::after {
         </p>
     </div>
 
+
     <div class="centre-title">
         Screenshots
     </div>
+
 
     <div class="cards">
 
@@ -169,9 +180,9 @@ body::after {
         <div class="card">
             <img src="Screenshots/1000039224.jpg">
         </div>
-            <img src="Screenshots/1000039225.jpg">
+
         <div class="card">
-            Screenshot 3
+            <img src="Screenshots/1000039225.jpg">
         </div>
 
     </div>
