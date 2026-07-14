@@ -16,47 +16,6 @@
 html, body {
     height: 100%;
     margin: 0;
-}
-
-.button-text {
-    color: white;
-    font-size: 30px;
-    font-family: "Coolvetica", sans-serif;
-}
-
-.paragraph {
-    color: white;
-    font-size: 20px;
-    font-family: "Coolvetica", sans-serif;
-}
-
-.description {
-    position: absolute;
-    top: 170px;
-    left: 20px;
-}
-
-.top-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: white;
-    font-size: 60px;
-    font-family: "Dangrek", sans-serif;
-    z-index: 1;
-}
-
-.line {
-    position: absolute;
-    top: 120px;
-    left: 20px;
-    right: 20px;
-    height: 3px;
-    background: white;
-    z-index: 1;
-}
-
-body {
     background-color: #211e25;
 }
 
@@ -71,51 +30,109 @@ body::after {
     z-index: -1;
 }
 
+
+/* Title */
+.top-left {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    color: white;
+    font-size: 60px;
+    font-family: "Dangrek", sans-serif;
+
+    z-index: 10;
+}
+
+
+/* Divider line */
+.line {
+    position: fixed;
+    top: 120px;
+    left: 20px;
+    right: 20px;
+
+    height: 3px;
+    background: white;
+
+    z-index: 10;
+}
+
+
+/* Top buttons */
 .buttons {
     position: fixed;
     top: 30px;
     right: 30px;
-    
+
     display: flex;
     gap: 20px;
-    z-index: 2;
+
+    z-index: 10;
 }
 
 .buttons button {
     background: #151219;
     color: white;
+
     border: 3px solid #3a383d;
     padding: 12px 25px;
+
     font-size: 30px;
     font-family: "Dangrek", sans-serif;
+
     border-radius: 100px;
     cursor: pointer;
 }
 
-.cards {
-    position: absolute;
-    top: 400px;
-    left: 0;
-    right: 0;
 
+/* Text */
+.paragraph {
+    color: white;
+    font-size: 20px;
+    font-family: "Coolvetica", sans-serif;
+}
+
+.description {
+    padding-top: 170px;
+    padding-left: 20px;
+}
+
+
+/* Scroll content */
+.content {
+    padding-top: 350px;
+    padding-bottom: 100px;
+}
+
+
+/* Cards */
+.cards {
     display: flex;
+    gap: 60px;
+
     justify-content: center;
     align-items: center;
-    gap: 60px;
 
     overflow-x: auto;
     padding: 20px;
 }
 
+
 .card {
     min-width: 500px;
     height: 200px;
+
     background: #151219;
     color: white;
+
     border-radius: 50px;
     border: 3px solid #3a383d;
+
     padding: 20px;
+
     flex-shrink: 0;
+
     font-family: "Coolvetica", sans-serif;
 }
 
@@ -130,31 +147,41 @@ body::after {
 
 <div class="line"></div>
 
-<div class="paragraph description">
-    <p>
-        noto. is a minimalist notes app made with Jetpack Compose using Kotlin.
-        Check out the Github repository and create an issue to request any features or report bugs.
-    </p>
-</div>
 
 <div class="buttons">
     <button>Github</button>
     <button>Download</button>
 </div>
 
-<div class="cards">
-    <div class="card">
-        Card 1
+
+<div class="content">
+
+    <div class="paragraph description">
+        <p>
+            noto. is a minimalist notes app made with Jetpack Compose using Kotlin.
+            Check out the Github repository and create an issue to request any features or report bugs.
+        </p>
     </div>
 
-    <div class="card">
-        Card 2
+
+    <div class="cards">
+
+        <div class="card">
+            Screenshot 1
+        </div>
+
+        <div class="card">
+            Screenshot 2
+        </div>
+
+        <div class="card">
+            Screenshot 3
+        </div>
+
     </div>
 
-    <div class="card">
-        Card 3
-    </div>
 </div>
+
 
 </body>
 </html>
