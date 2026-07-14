@@ -18,11 +18,6 @@ Minimal notes app in a material 3 style
 - Multilingual Support  
 ## Screenshots
 
-
-<div style="display: flex; gap: 10px;">
-
-  <img src="https://github.com/user-attachments/assets/cfbc4366-592b-4779-94bd-64d96ba39319" alt="Screenshot 1" width="300"/>
-  
-  <img src="https://github.com/user-attachments/assets/517295c3-0b5f-43da-a663-ef427b37e545" alt="Screenshot 2" width="300"/>
-
-</div>
+<img width="1080" height="2244" alt="1000039225" src="https://github.com/user-attachments/assets/213ffeb7-6865-4384-b660-39f23dae2740" />
+<img width="1080" height="2244" alt="1000039224" src="https://github.com/user-attachments/assets/e26d87da-af24-4b8a-b4c6-697fe577f511" />
+<img width="1080" height="2244" alt="1000039223" src="https://github.com/user-attachments/assets/9eac685c-fcc4-4f98-8698-94b96c73f8c3" />
