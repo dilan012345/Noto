@@ -3,6 +3,8 @@
 Minimal notes app in a material 3 style
 </p>
 
+https://dilan012345.github.io/Noto/
+
 ## Features
 > [!NOTE]
 > UNFINISHED
