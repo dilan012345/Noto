@@ -21,12 +21,19 @@ html, body {
     font-size: 60px;
     font-family: "Dangrek", sans-serif;
 
-    border-bottom: 3px solid white;
-    padding-bottom: 5px;
 
     z-index: 1;
 }
 
+.line {
+    position: absolute;
+    top: 105px; /* move it up/down */
+    left: 20px;
+    right: 20px; /* leaves a small gap on both edges */
+    height: 3px;
+    background: white;
+    z-index: 1;
+}
 
 body {
     background-color: #211e25;
@@ -49,6 +56,8 @@ body::after {
 
 <div class="top-left">
     noto.
+</div>
+<div class="line">
 </div>
 
 </body>
