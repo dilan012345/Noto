@@ -1,10 +1,290 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Noto</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Noto - Notes Reimagined</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    font-family: Inter, Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(circle at top, #193b3a, #080a0d 45%);
+    color: white;
+    overflow-x: hidden;
+}
+
+
+header {
+    text-align: center;
+    padding: 100px 20px 70px;
+}
+
+
+.logo {
+    font-size: 80px;
+    font-weight: 800;
+    letter-spacing: -4px;
+    background: linear-gradient(90deg,#5ff5dd,#80aaff);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+
+.subtitle {
+    max-width: 650px;
+    margin: 25px auto;
+    font-size: 22px;
+    color: #b7bec8;
+    line-height: 1.5;
+}
+
+
+.buttons {
+    margin-top: 40px;
+}
+
+
+.button {
+    display: inline-block;
+    padding: 16px 35px;
+    border-radius: 50px;
+    background: #5ff5dd;
+    color: #07100f;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .3s;
+}
+
+
+.button:hover {
+    transform: translateY(-4px);
+}
+
+
+section {
+    padding: 70px 8%;
+}
+
+
+.title {
+    font-size: 42px;
+    margin-bottom: 40px;
+}
+
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 25px;
+}
+
+
+.card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    padding: 30px;
+    border-radius: 25px;
+    transition: .3s;
+}
+
+
+.card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.1);
+}
+
+
+.icon {
+    font-size: 35px;
+}
+
+
+.card h3 {
+    font-size: 24px;
+}
+
+
+.card p {
+    color:#b7bec8;
+    line-height:1.5;
+}
+
+
+
+.phones {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+
+.phone {
+    height:650px;
+    border-radius:35px;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.7);
+    transition:.3s;
+}
+
+
+.phone:hover {
+    transform:translateY(-15px);
+}
+
+
+
+.download {
+    text-align:center;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(95,245,221,.15),
+            rgba(128,170,255,.15)
+        );
+    border-radius:40px;
+}
+
+
+footer {
+    text-align:center;
+    padding:40px;
+    color:#777;
+}
+
+
+</style>
+
 </head>
+
+
 <body>
-    <h1>Noto</h1>
-    <p>Test - initial github page </p>
+
+
+<header>
+
+<div class="logo">
+Noto
+</div>
+
+<p class="subtitle">
+A beautiful, minimal notes app designed to make capturing ideas effortless.
+Built with Jetpack Compose.
+</p>
+
+
+<div class="buttons">
+<a class="button" href="#">
+Download APK
+</a>
+</div>
+
+</header>
+
+
+
+<section>
+
+<h2 class="title">
+Features
+</h2>
+
+
+<div class="features">
+
+
+<div class="card">
+<div class="icon">✍️</div>
+<h3>Effortless Writing</h3>
+<p>
+A clean editor designed for quick thoughts, ideas and everything in between.
+</p>
+</div>
+
+
+
+<div class="card">
+<div class="icon">🎨</div>
+<h3>Beautiful Design</h3>
+<p>
+Modern Material design with smooth animations and custom themes.
+</p>
+</div>
+
+
+
+<div class="card">
+<div class="icon">⚡</div>
+<h3>Fast & Lightweight</h3>
+<p>
+Instant startup and a simple experience without unnecessary clutter.
+</p>
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+<section>
+
+<h2 class="title">
+Screenshots
+</h2>
+
+
+<div class="phones">
+
+<img class="phone" src="images/home.png">
+
+<img class="phone" src="images/note.png">
+
+<img class="phone" src="images/settings.png">
+
+</div>
+
+
+</section>
+
+
+
+
+<section class="download">
+
+<h2>
+Ready to take better notes?
+</h2>
+
+<p>
+Download Noto today.
+</p>
+
+<a class="button" href="#">
+Get Noto
+</a>
+
+</section>
+
+
+
+
+<footer>
+© 2026 Noto
+</footer>
+
+
 </body>
 </html>
