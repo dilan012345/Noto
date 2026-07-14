@@ -1,118 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Noto - Notes App</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #0f1115;
+            color: white;
+        }
+
+        header {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 64px;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: #b0b3b8;
+            font-size: 20px;
+            margin-top: 15px;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 30px;
+            background: #4dd0c8;
+            color: black;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 50px 10%;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #181b22;
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .screenshots {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .screenshots img {
+            height: 600px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px black;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #888;
+        }
+
+    </style>
+</head>
 
 
-<title>noto.</title>
+<body>
 
-<style>
+<header>
+    <h1>Noto</h1>
 
-* {
-    box-sizing: border-box;
-    font-family: Inter, Arial, sans-serif;
-}
+    <p class="subtitle">
+        A simple, beautiful notes app built with Jetpack Compose.
+    </p>
 
-body {
-    margin: 0;
-    background:
-        radial-gradient(circle at top, #92B86A, #211e25 45%);
-    color: white;
-    overflow-x: hidden;
-}
+    <a class="button" href="#">
+        Download
+    </a>
+</header>
 
 
-header {
-    text-align: center;
-    padding: 100px 20px 70px;
-}
+<section>
+    <h2>Features</h2>
 
+    <div class="features">
 
-.logo {
-    font-size: 80px;
-    font-weight: 800;
-    letter-spacing: -4px;
-    background: linear-gradient(90deg,#5ff5dd,#80aaff);
-    -webkit-background-clip: text;
-    color: transparent;
-}
+        <div class="card">
+            <h3>✏️ Simple Editing</h3>
+            <p>
+                Write notes quickly with a clean distraction-free editor.
+            </p>
+        </div>
 
+        <div class="card">
+            <h3>🎨 Beautiful Design</h3>
+            <p>
+                Modern Material design with custom themes and animations.
+            </p>
+        </div>
 
-.subtitle {
-    max-width: 650px;
-    margin: 25px auto;
-    font-size: 22px;
-    color: #b7bec8;
-    line-height: 1.5;
-}
+        <div class="card">
+            <h3>⚡ Fast</h3>
+            <p>
+                Lightweight and optimized for Android.
+            </p>
+        </div>
 
-
-
-<div class="logo">
-noto.
-</div>
-
-<p class="subtitle">
-
-Built with Jetpack Compose.
-</p>
-
-
-<div class="buttons">
-<a class="button" href="#">
-Download APK
-</a>
-</div>
-
-
-
+    </div>
+</section>
 
 
 <section>
 
-<h2 class="title">
-Features
-</h2>
+    <h2>Screenshots</h2>
 
+    <div class="screenshots">
 
+        <img src="images/home.png">
 
+        <img src="images/note.png">
 
+        <img src="images/settings.png">
 
-</section>
-
-
-
-
-<section>
-
-<h2 class="title">
-Screenshots
-</h2>
-
-
-<div class="phones">
-
-<img class="phone" src="images/home.png">
-
-<img class="phone" src="images/note.png">
-
-<img class="phone" src="images/settings.png">
-
-</div>
-
+    </div>
 
 </section>
-
-
-
-
-
-
-
 
 
 <footer>
-© 2026 Noto
+    © 2026 Noto
 </footer>
 
 
