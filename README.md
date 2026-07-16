@@ -18,4 +18,4 @@ https://dilan012345.github.io/Noto/
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)](https://github.com/dilan012345/Noto/tree/main)
 [![Download](https://img.shields.io/badge/Download-APK-green?logo=android)](//)
-[![Latest release](https://img.shields.io/github/v/release/labstack/Noto?style=flat-square&label=release&color=00afd1)](https://github.com/labstack/Noto/releases)
+[![Latest release](https://img.shields.io/github/v/release/dilan012345/Noto?style=flat-square&label=release&color=00afd1)](https://github.com/dilan012345/Noto/releases)
