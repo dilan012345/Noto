@@ -1,5 +1,6 @@
 package com.example.noto
 
+
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -75,6 +76,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.activity.compose.setContent
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
@@ -84,6 +86,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import kotlin.math.cos
+import kotlin.math.sin
 
 class Homepage : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -166,7 +170,7 @@ fun Title(Titletext: String){
 }
 
 @Composable
-fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit){
+fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit,onAddClick: () -> Unit){
     val haptic = LocalHapticFeedback.current
     Box(
         modifier = Modifier
@@ -245,7 +249,7 @@ fun Bottommenu(onSettingsClick: () -> Unit,onImportClick: () -> Unit){
         ){
 
             IconButton(
-                onClick = {},
+                onClick = {onAddClick()},
                 modifier = Modifier
                     .size(60.dp)
                     .bounceClick()
@@ -338,11 +342,11 @@ fun M3_Hexagon(
         val steps = 100
         for (i in 0..steps) {
             val angle = (2 * Math.PI * i / steps).toFloat()
-            val wave = kotlin.math.sin(angle * points) * wobble
+            val wave = sin(angle * points) * wobble
             val r = radius + wave
 
-            val x = center.x + r * kotlin.math.cos(angle)
-            val y = center.y + r * kotlin.math.sin(angle)
+            val x = center.x + r * cos(angle)
+            val y = center.y + r * sin(angle)
 
             if (i == 0) path.moveTo(x, y) else path.lineTo(x, y)
         }
@@ -354,6 +358,7 @@ fun M3_Hexagon(
 
 @Composable
 fun NoteGrid(onNoteClick: (String) -> Unit){
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(start = 12.dp, top = 0.dp, end = 12.dp, bottom = 50.dp),
@@ -419,5 +424,73 @@ fun NoteGrid(onNoteClick: (String) -> Unit){
                 }
             }
         }
+
+        item(span = { GridItemSpan(maxLineSpan) }) {
+
+            Badges()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+            )
+        }
+    }}
+
+
+
+@Composable
+fun Badges(){
+    val uriHandler = LocalUriHandler.current
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+
+        ){
+            Row(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .size(width = 200.dp, height = 60.dp)
+                ,
+                horizontalArrangement = Arrangement.Center,
+            ){
+                IconButton(
+                    onClick = { uriHandler.openUri("https://github.com/dilan012345/Noto")},
+                    modifier = Modifier
+                        .size(60.dp)
+                        .bounceClick()
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.github_logo_green),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+                    )
+
+                }
+                IconButton(onClick = { uriHandler.openUri("https://developer.android.com/compose")},
+                    modifier = Modifier
+                        .size(60.dp)
+                        .bounceClick()) {
+                    Icon(
+                        painter = painterResource(R.drawable.jetpack_compose_green),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+
+                        )
+                }
+                IconButton(onClick = { uriHandler.openUri("https://dilan012345.github.io/Noto/")},
+                    modifier = Modifier
+                        .size(60.dp)
+                        .bounceClick()) {
+                    Icon(
+                        painter = painterResource(R.drawable.noto_logo),
+                        contentDescription = null,
+                        tint = Color.Unspecified,
+
+                        )
+                }
+
+
+            }
+        }
     }
-}

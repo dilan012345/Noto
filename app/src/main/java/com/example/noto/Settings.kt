@@ -257,12 +257,19 @@ fun SettingsGrid() {
            }
             Box(
                 modifier = Modifier
-                    .height(160.dp)
+                    .height(10.dp)
                     .fillMaxWidth()
 
             ){}
 
 
         }
-
+        item{
+            Badges()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(200.dp)
+            )
+        }
 }}

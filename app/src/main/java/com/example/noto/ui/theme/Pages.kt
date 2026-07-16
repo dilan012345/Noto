@@ -36,6 +36,7 @@ fun HomeScreen(navController: NavController) {
         }
     )
     Bottommenu (
+        onAddClick = { navController.navigate("edit note") },
         onSettingsClick = {
             navController.navigate("settings")
         }
@@ -77,15 +78,17 @@ fun EditNoteScreen(navController: NavController, noteID: String?) {
 @Composable
 fun ImportNotesScreen(navController: NavController) {
     Background()
-    BackButton(
-        onBackClick = {
-            navController.navigate("home")
-        }
+    Haze()
+    BottomMenuForNotes(
+
+        onSettingsClick = { navController.navigate("settings") },
+        onBackClick = { navController.navigate("home") }
     )
     Title(
         Titletext = "Import"
     )
-    TitleSeperator()
+
     ImportBox()
+
 
 }

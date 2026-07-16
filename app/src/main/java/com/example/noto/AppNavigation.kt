@@ -42,7 +42,7 @@ fun AppNavigation() {
                     exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) }) {
                     SettingsScreen(navController)
             }
-                composable("edit note", enterTransition = { slideInHorizontally(initialOffsetX = { -1000 }) },
+                composable("edit note", enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
                     exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) }) {
                     val noteId = navController.previousBackStackEntry
                         ?.savedStateHandle
