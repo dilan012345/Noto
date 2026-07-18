@@ -5,6 +5,9 @@ Minimal notes app in a material 3 style
 
 https://dilan012345.github.io/Noto/
 
+Minimum SDK: 33
+(Android 13+ / Tiramisu)
+
 ## Features
 > [!NOTE]
 > UNFINISHED
