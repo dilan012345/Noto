@@ -24,6 +24,21 @@ Minimum SDK: 33
 <img width="300" alt="1000039223" src="https://github.com/user-attachments/assets/9eac685c-fcc4-4f98-8698-94b96c73f8c3" />
 
 ## Changelog
+### v2.5.6-beta
+Room implementation 
+
+### v1.5.6-beta
+Import notes page established
+3 badge row at scrollable content bottom
+
+### v1.4.6-beta
+Transition between pages
+
+### v1.4.5-beta
+Conversion to navController + navHost
+
+### v1.4.4-beta
+Purple UI switched to green
 
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)](https://github.com/dilan012345/Noto/tree/main)
