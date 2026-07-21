@@ -2,7 +2,9 @@ package com.example.noto
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,34 +13,33 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.graphics.drawscope.clipRect
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.relocation.BringIntoViewRequester
-import androidx.compose.foundation.relocation.bringIntoViewRequester
-import androidx.compose.ui.focus.onFocusEvent
-import kotlinx.coroutines.launch
-import androidx.compose.foundation.layout.imeNestedScroll
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFrom
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -54,21 +55,28 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.times
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.delay
-import com.example.noto.R
 
 class NotePage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,8 +106,11 @@ fun TitleSeperator(){
     }
 
 }
+
+
+//not in use due to asynch issue
 @Composable
-fun NoteTitle(Titletext: String) {
+fun NoteTitle(Titletext: String, Body: String, Id: Int, viewModel: NoteViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -108,79 +119,236 @@ fun NoteTitle(Titletext: String) {
 
     ) {
 
-        Text(
-            text = Titletext,
+        var titletemp by remember { mutableStateOf(Titletext) }
+        BasicTextField(
+            value = titletemp,
+            onValueChange = { titletemp = it
 
-            style = MaterialTheme.typography.bodyLarge.copy(
+                viewModel.saveNote(
+                    Note(
+                        id = Id,
+                        Title = it,
+                        Body = Body,
+                        Bookmarked = false
+                    )
+
+
+
+                )
+                Log.d("ROOM", "Saving id=$Id title=$it")
+
+                            },
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 60.sp,
-                color = MaterialTheme.colorScheme.onBackground
+                lineHeight = 20.sp
+
             ),
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .padding(20.dp)
+                .padding(start = 40.dp),
 
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
         )
+
+
+
 
     }
 }
+
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun NoteScroll() {
+fun NoteScroll(
+    Title: String,
+    Body: String,
+    Id: Int,
+    viewModel: NoteViewModel
+) {
+    var BodyTemp by remember { mutableStateOf(Body) }
+    var TitleTemp by remember { mutableStateOf(Title) }
+    val scrollState = rememberScrollState()
+    var titleHeight by remember { mutableStateOf(120.dp) }
 
-    var text by rememberSaveable { mutableStateOf("enter") }
-
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .imePadding(),
-        verticalArrangement = Arrangement.spacedBy(0.dp)
+            .verticalScroll(scrollState)
     ) {
 
-        NoteTitle("Test")
-
-        Box(
+        Column(
             modifier = Modifier
-                .height(10.dp)
-                .fillMaxWidth()
-        )
+                .fillMaxSize()
+                .imePadding()
+                ,
 
-        Box(
-            modifier = Modifier
 
-                .padding(start = 20.dp, end = 20.dp)
-                .fillMaxWidth()
-                .border(
-                    0.5.dp,
-                    shape = RoundedCornerShape(20.dp),
-                    color = MaterialTheme.colorScheme.secondaryContainer
-                )
-                .clip(RoundedCornerShape(20.dp))
-                .background(MaterialTheme.colorScheme.secondary)
+            verticalArrangement = Arrangement.spacedBy(0.dp)
         ) {
 
-            TextField(
-                value = text,
-                onValueChange = { text = it },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                modifier = Modifier.fillMaxSize(),
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Default
-                ),
-                singleLine = false,
-                maxLines = Int.MAX_VALUE,
-                textStyle = TextStyle(
-                    fontFamily = FontFamily(Font(R.font.coolvetica)),
-                    fontSize = 20.sp
-                )
-            )
-        }
+            // TITLE
 
-        repeat(10) {
+            val titleStyle = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onBackground,
+                fontSize = 60.sp,
+                lineHeight = 80.sp
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 40.dp,
+                        top = 70.dp,
+                        end = 40.dp
+                    )
+                    .heightIn(min = 110.dp)
+            ) {
+
+                BasicTextField(
+                    value = TitleTemp,
+                    onValueChange = {
+                        TitleTemp = it
+
+                        viewModel.saveNote(
+                            Note(
+                                id = Id,
+                                Title = it,
+                                Body = BodyTemp,
+                                Bookmarked = false
+                            )
+                        )
+
+                        Log.d("ROOM", "Saving id=$Id title=$it")
+                    },
+                    textStyle = titleStyle,
+                    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                    modifier = Modifier.fillMaxWidth(),
+                    onTextLayout = { layout ->
+                        titleHeight = (layout.lineCount * 110).dp
+                    },
+                    decorationBox = { innerTextField ->
+                        Box(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            if (TitleTemp.isEmpty()) {
+                                Text(
+                                    text = "Title",
+                                    style = titleStyle.copy(
+                                        color = Color.Gray
+                                    )
+                                )
+                            }
+
+                            innerTextField()
+                        }
+                    }
+                )
+            }
+
+
+
+
+
+            // BODY
+
+            var boxHeight by remember { mutableIntStateOf(0) }
+
+            Box(
+                modifier = Modifier
+
+                    .padding(
+                        start = 20.dp,
+                        end = 20.dp,
+                        top = 20.dp
+                    )
+                    .fillMaxWidth()
+                    .onGloballyPositioned {
+                        boxHeight = it.size.height
+                    }
+                    .border(
+                        0.5.dp,
+                        shape = RoundedCornerShape(20.dp),
+                        color = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(MaterialTheme.colorScheme.secondary)
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .width(5.dp)
+                        .height(50.dp)
+
+                        .offset {
+                            IntOffset(
+                                x =0,
+                                (
+                                        scrollState.value.toFloat() /
+                                                scrollState.maxValue.coerceAtLeast(1) *
+                                                (boxHeight - 50)
+                                        ).toInt()
+                            )
+                        }
+                        .clip(RoundedCornerShape(100))
+                        .background(MaterialTheme.colorScheme.primary)
+
+                )
+
+
+
+                TextField(
+
+                    value = BodyTemp,
+                    onValueChange = {
+                        BodyTemp = it
+
+                        viewModel.saveNote(
+                            Note(
+                                id = Id,
+                                Title = TitleTemp,
+                                Body = it,
+                                Bookmarked = false
+                            )
+                        )
+
+                        Log.d("ROOM", "Saving id=$Id body=$it")
+
+
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(
+                            (BodyTemp.count { it == '\n' } * 30).dp
+                        ),
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Default
+                    ),
+                    singleLine = false,
+                    textStyle = TextStyle(
+                        fontFamily = FontFamily(
+                            Font(R.font.coolvetica)
+                        ),
+                        fontSize = 20.sp
+                    )
+
+                )
+            }
+
+
+            Box(modifier = Modifier
+                .height(70.dp)
+                .fillMaxWidth())
+
+            Badges()
             Box(
                 modifier = Modifier
                     .height(150.dp)
@@ -189,7 +357,6 @@ fun NoteScroll() {
         }
     }
 }
-
 @Composable
 fun BottomMenuForNotes(onSettingsClick: () -> Unit, onBackClick: () -> Unit){
     val haptic = LocalHapticFeedback.current
@@ -284,7 +451,7 @@ fun BottomMenuForNotes(onSettingsClick: () -> Unit, onBackClick: () -> Unit){
                 .bounceClick()
         ) {
             Icon(
-                painter = painterResource(com.example.noto.R.drawable.rounded_arrow_back_24),
+                painter = painterResource(R.drawable.rounded_arrow_back_24),
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.secondary
             )
@@ -303,7 +470,7 @@ fun BottomMenuForNotes(onSettingsClick: () -> Unit, onBackClick: () -> Unit){
                     .bounceClick()
             ) {
                 Icon(
-                    painter = painterResource(com.example.noto.R.drawable.round_add_24),
+                    painter = painterResource(R.drawable.round_add_24),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -318,7 +485,7 @@ fun BottomMenuForNotes(onSettingsClick: () -> Unit, onBackClick: () -> Unit){
                     .bounceClick()
             ) {
                 Icon(
-                    painter = painterResource(com.example.noto.R.drawable.outline_bookmarks_24),
+                    painter = painterResource(R.drawable.outline_bookmarks_24),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
@@ -335,7 +502,7 @@ fun BottomMenuForNotes(onSettingsClick: () -> Unit, onBackClick: () -> Unit){
                     .bounceClick()
             ) {
                 Icon(
-                    painter = painterResource(com.example.noto.R.drawable.outline_settings_24),
+                    painter = painterResource(R.drawable.outline_settings_24),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
